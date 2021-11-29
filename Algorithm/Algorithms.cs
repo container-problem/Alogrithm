@@ -13,42 +13,6 @@ namespace Algorithm
             y = t;
         }
 
-        /// <summary>
-        /// Полный перебор всех перестановок
-        /// </summary>
-        /// <param name="count">кол-во контейнеров</param>
-        /// <param name="best">лучшее распределение предметов по контейнерам</param>
-        /// <param name="index">порядок индексов согласно исходному массиву</param>
-        /// <param name="bestIndex">порядок индексов для лучшего решения</param>
-        public static void FindBest(int t, int n, int[] masses,
-                int M, ref int count, ref List<List<int>> bestSol,
-                ref int[] indices, ref int[] indicesForBestSol)
-        {
-            if (t == n - 1)
-            {
-                List<List<int>> result = new List<List<int>>(FF(n, M, masses));
-                if (result.Count < count)
-                {
-                    bestSol = result;
-                    count = result.Count;
-                    Array.Copy(indices, indicesForBestSol, n);
-                }
-            }
-            else
-            {
-                for (int j = t; j < n; ++j)
-                {
-                    swap(ref masses[t], ref masses[j]);
-                    swap(ref indices[t], ref indices[j]);
-                    t++;
-                    FindBest(t, n, masses, M, ref count, ref bestSol, ref indices, ref indicesForBestSol);
-                    t--;
-                    swap(ref masses[t], ref masses[j]);
-                    swap(ref indices[t], ref indices[j]);
-                }
-            }
-        }
-
         public static List<List<int>> ExactAlg(int n, int M, int[] masses)
         {
             List<List<int>> bestSol = new List<List<int>>();
@@ -78,7 +42,7 @@ namespace Algorithm
             return FF(n, M, Sort.QuickSort(masses));
         }
 
-        public static List<List<int>> FF(int n, int M, int[] masses)
+        private static List<List<int>> FF(int n, int M, int[] masses)
         {
             List<List<int>> containers = new List<List<int>>();
             List<int> containersMasses = new List<int>();
@@ -107,6 +71,42 @@ namespace Algorithm
                 }
             }
             return containers;
+        }
+
+        /// <summary>
+        /// Полный перебор всех перестановок
+        /// </summary>
+        /// <param name="count">кол-во контейнеров</param>
+        /// <param name="best">лучшее распределение предметов по контейнерам</param>
+        /// <param name="index">порядок индексов согласно исходному массиву</param>
+        /// <param name="bestIndex">порядок индексов для лучшего решения</param>
+        private static void FindBest(int t, int n, int[] masses,
+                int M, ref int count, ref List<List<int>> bestSol,
+                ref int[] indices, ref int[] indicesForBestSol)
+        {
+            if (t == n - 1)
+            {
+                List<List<int>> result = new List<List<int>>(FF(n, M, masses));
+                if (result.Count < count)
+                {
+                    bestSol = result;
+                    count = result.Count;
+                    Array.Copy(indices, indicesForBestSol, n);
+                }
+            }
+            else
+            {
+                for (int j = t; j < n; ++j)
+                {
+                    swap(ref masses[t], ref masses[j]);
+                    swap(ref indices[t], ref indices[j]);
+                    t++;
+                    FindBest(t, n, masses, M, ref count, ref bestSol, ref indices, ref indicesForBestSol);
+                    t--;
+                    swap(ref masses[t], ref masses[j]);
+                    swap(ref indices[t], ref indices[j]);
+                }
+            }
         }
     }
 }
