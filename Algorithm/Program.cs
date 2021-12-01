@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace Algorithm
 {
@@ -34,10 +37,153 @@ namespace Algorithm
             }
         }
 
+        /*
         static void Main(string[] args)
         {
-            string path = Console.ReadLine();
-            Read(path);
+            int a = int.MaxValue;
+            TimeSpan sum = TimeSpan.Zero;
+            var start = DateTime.Now;
+            for (int i = 0; i < 1000000; i++)
+            {
+                a--;
+                a++;
+                a /= 2;
+                a *= 2;
+                
+            }
+            var end = DateTime.Now;
+            sum += end - start;
+           
+
+            Console.WriteLine((sum.TotalMilliseconds / 1000000 )/6);
+
+            Console.ReadKey();
         }
+        */
+
+        
+        static void Main(string[] args)
+        {
+            var random = new Random();
+            M = 100;
+            for (int i = 1; i < 12; i++)
+            {
+                n = i;
+                masses = new int[n];
+
+                Console.WriteLine($"For N = {n}");
+
+                double mediumDeviationFF = 0;
+                double mediumDeviationFFS = 0;
+                for (int k = 0; k < 100; k++)
+                {
+                    for (int j = 0; j < n; j++)
+                    {
+                        masses[j] = random.Next(1, M);
+                    }
+
+                    double exactSolution = F(Algorithms.ExactAlg(n, M, masses));
+                    double FFSolution = F(Algorithms.FFAlg(n, M, masses));
+                    double FFSSolution = F(Algorithms.FFSAlg(n, M, masses));
+
+                    mediumDeviationFF = exactSolution * 1.7 - FFSolution;
+                    mediumDeviationFFS = 11.0 / 9.0 * exactSolution + 1 - FFSSolution;
+
+                    if (mediumDeviationFF < 0)
+                    {
+                        Console.WriteLine("FF вышел за пределы");
+                    }
+
+                    if (mediumDeviationFFS < 0)
+                    {
+                        Console.WriteLine("FFS вышел за пределы");
+                    }
+                }
+            }
+
+            Console.ReadKey();
+        }
+
+        private static double F(List<List<int>> solution)
+        {
+            return solution.Count();
+        }
+        
+
+        /*
+        //Оценка времени выполнения
+        static void Main(string[] args)
+        {
+            using (var sw = new StreamWriter("output.txt"))
+            {
+                var random = new Random();
+                M = 100;
+                for (int i = 1; i < 11; i++)
+                {
+                    n = i;
+                    masses = new int[n];
+
+                    Console.WriteLine($"For N = {n}");
+                    
+                    TimeSpan Sum = TimeSpan.Zero;
+                    
+                    for (int k = 0; k < 100; k++)
+                    {
+                        for(int j = 0; j < n; j++)
+                        {
+                            masses[j] = random.Next(1, M);
+                        }
+
+                        DateTime start = DateTime.Now;
+                        Algorithms.ExactAlg(n, M, masses);
+                        DateTime end = DateTime.Now;
+                        Sum += end - start;
+                    }
+
+                    Console.WriteLine($"Time for exact algorithm: {(Sum / 100).TotalMilliseconds}");
+                    
+                    //Sum = TimeSpan.Zero;
+                    for (int k = 0; k < 1000000; k++)
+                    {
+                        for (int j = 0; j < n; j++)
+                        {
+                            masses[j] = random.Next(1, M);
+                        }
+
+                        DateTime start = DateTime.Now;
+                        Algorithms.FFAlg(n, M, masses);
+                        DateTime end = DateTime.Now;
+                        Sum += end - start;
+                    }
+
+
+                    string line = $"{n},{(Sum).TotalMilliseconds / 1000000}";
+
+
+
+                    Sum = TimeSpan.Zero;
+                    for (int k = 0; k < 1000000; k++)
+                    {
+                        for (int j = 0; j < n; j++)
+                        {
+                            masses[j] = random.Next(1, M);
+                        }
+
+                        DateTime start = DateTime.Now;
+                        Algorithms.FFSAlg(n, M, masses);
+                        DateTime end = DateTime.Now;
+                        Sum += end - start;
+                    }
+
+                    line += $",{(Sum).TotalMilliseconds / 1000000} ";
+
+                    sw.WriteLine(line);
+                }
+
+            }
+            Console.ReadKey();
+        }
+    */
+
     }
 }

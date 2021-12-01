@@ -26,8 +26,13 @@ namespace Algorithm
             //Т. к. распределение по контейнерам было найдено для массива,
             //отличного от исходного, необходимо переуказать индексы
             for (int i = 0; i < count; i++)
+            {
                 for (int j = 0; j < bestSol[i].Count; j++)
+                {
                     bestSol[i][j] = indicesForBestSol[bestSol[i][j]];
+                }  
+            }
+                
 
             return bestSol;
         }
@@ -86,8 +91,8 @@ namespace Algorithm
         {
             if (t == n - 1)
             {
-                List<List<int>> result = new List<List<int>>(FF(n, M, masses));
-                if (result.Count < count)
+                List<List<int>> result = FF(n, M, masses);
+                if (result.Count <= count)
                 {
                     bestSol = result;
                     count = result.Count;
@@ -100,7 +105,7 @@ namespace Algorithm
                 {
                     swap(ref masses[t], ref masses[j]);
                     swap(ref indices[t], ref indices[j]);
-                    t++;
+                    t++;    
                     FindBest(t, n, masses, M, ref count, ref bestSol, ref indices, ref indicesForBestSol);
                     t--;
                     swap(ref masses[t], ref masses[j]);

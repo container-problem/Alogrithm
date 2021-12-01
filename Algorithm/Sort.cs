@@ -16,7 +16,7 @@ public class Sort
         var pivot = minIndex - 1;
         for (var i = minIndex; i < maxIndex; i++)
         {
-            if (array[i] < array[maxIndex])
+            if (array[i] > array[maxIndex])
             {
                 pivot++;
                 Swap(ref array[pivot], ref array[i]);
