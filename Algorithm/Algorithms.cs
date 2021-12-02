@@ -18,11 +18,11 @@ namespace Algorithm
             List<List<int>> bestSol = new List<List<int>>();
             int[] indices = new int[n];
             int[] indicesForBestSol = new int[n];
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)//2n+2
                 indices[i] = i;
-            int count = n;
+            int count = n;//1
 
-            FindBest(0, n, masses, M, ref count, ref bestSol, ref indices, ref indicesForBestSol);
+            FindBest(0, n, masses, M, ref count, ref bestSol, ref indices, ref indicesForBestSol);//?
             //Т. к. распределение по контейнерам было найдено для массива,
             //отличного от исходного, необходимо переуказать индексы
             for (int i = 0; i < count; i++)
@@ -51,12 +51,12 @@ namespace Algorithm
         {
             List<List<int>> containers = new List<List<int>>();
             List<int> containersMasses = new List<int>();
-            int k = 0; //кол-во использованных контейнеров
+            int k = 0; //кол-во использованных контейнеров //1
             bool IsFind;
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)//2n+2
             {
-                IsFind = false;
-                for (int j = 0; j < k; j++)
+                IsFind = false;//n
+                for (int j = 0; j < k; j++)//2n^2+
                 {
                     if (M - containersMasses[j] >= masses[i])
                     {
