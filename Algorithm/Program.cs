@@ -80,6 +80,7 @@ namespace Algorithm
                 var r = new Random();
                 n = r.Next(1, 10);
                 M = r.Next(1, 100);
+                masses = new int[n];
 
                 for(int i = 0; i < n; i++)
                 {
