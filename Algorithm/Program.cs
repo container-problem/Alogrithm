@@ -34,6 +34,7 @@ namespace Algorithm
             catch (Exception e)
             {
                 Console.WriteLine("Ошибка при чтении файла: \n" + e.Message);
+                throw e;
             }
         }
 
@@ -61,15 +62,32 @@ namespace Algorithm
         }
         */
 
-        
+        /*
         static void Main(string[] args)
         {
+            
+            
             var random = new Random();
-            M = 100;
-            for (int i = 1; i < 12; i++)
+
+            Console.Write("Read from file = ");
+            bool readFromFile = bool.Parse(Console.ReadLine());
+            var input = "";
+            if(readFromFile)
             {
-                n = i;
-                masses = new int[n];
+                Console.Write("Input file path = ");
+                input = Console.ReadLine();
+                Read(input);
+            }
+
+            M = 100;
+            int N = readFromFile ? n : 12;
+            for (int i = 1; i < N; i++)
+            {
+                if(!readFromFile) 
+                {
+                    n = i;
+                    masses = new int[n];
+                }
 
                 Console.WriteLine($"For N = {n}");
 
@@ -77,10 +95,14 @@ namespace Algorithm
                 double mediumDeviationFFS = 0;
                 for (int k = 0; k < 100; k++)
                 {
-                    for (int j = 0; j < n; j++)
+                    if(!readFromFile)
                     {
-                        masses[j] = random.Next(1, M);
+                        for (int j = 0; j < n; j++)
+                        {
+                            masses[j] = random.Next(1, M);
+                        }
                     }
+                    
 
                     double exactSolution = F(Algorithms.ExactAlg(n, M, masses));
                     double FFSolution = F(Algorithms.FFAlg(n, M, masses));
@@ -109,19 +131,38 @@ namespace Algorithm
             return solution.Count();
         }
         
+        */
 
-        /*
         //Оценка времени выполнения
         static void Main(string[] args)
         {
+            Console.Write("Read from file = ");
+            bool readFromFile = bool.Parse(Console.ReadLine());
+
+            M = 100;
+            
+
+            if (readFromFile)
+            {
+                Console.Write("Input file path = ");
+                string input = Console.ReadLine();
+                Read(input);
+            }
+
+            int N = readFromFile ? n : 12;
+
             using (var sw = new StreamWriter("output.txt"))
             {
+                
+
                 var random = new Random();
-                M = 100;
-                for (int i = 1; i < 11; i++)
+                for (int i = 1; i < N; i++)
                 {
-                    n = i;
-                    masses = new int[n];
+                    if(!readFromFile)
+                    {
+                        n = i;
+                        masses = new int[n];
+                    }
 
                     Console.WriteLine($"For N = {n}");
                     
@@ -129,10 +170,14 @@ namespace Algorithm
                     
                     for (int k = 0; k < 100; k++)
                     {
-                        for(int j = 0; j < n; j++)
+                        if(!readFromFile)
                         {
-                            masses[j] = random.Next(1, M);
+                            for (int j = 0; j < n; j++)
+                            {
+                                masses[j] = random.Next(1, M);
+                            }
                         }
+                        
 
                         DateTime start = DateTime.Now;
                         Algorithms.ExactAlg(n, M, masses);
@@ -145,9 +190,12 @@ namespace Algorithm
                     //Sum = TimeSpan.Zero;
                     for (int k = 0; k < 1000000; k++)
                     {
-                        for (int j = 0; j < n; j++)
+                        if (!readFromFile)
                         {
-                            masses[j] = random.Next(1, M);
+                            for (int j = 0; j < n; j++)
+                            {
+                                masses[j] = random.Next(1, M);
+                            }
                         }
 
                         DateTime start = DateTime.Now;
@@ -164,9 +212,12 @@ namespace Algorithm
                     Sum = TimeSpan.Zero;
                     for (int k = 0; k < 1000000; k++)
                     {
-                        for (int j = 0; j < n; j++)
+                        if (!readFromFile)
                         {
-                            masses[j] = random.Next(1, M);
+                            for (int j = 0; j < n; j++)
+                            {
+                                masses[j] = random.Next(1, M);
+                            }
                         }
 
                         DateTime start = DateTime.Now;
@@ -183,7 +234,7 @@ namespace Algorithm
             }
             Console.ReadKey();
         }
-    */
+    
 
     }
 }
