@@ -46,12 +46,6 @@ namespace Algorithm
             sw.WriteLine(message);
         }
 
-        static void Print(string message)
-        {
-            Console.Write(message);
-            sw.Write(message);
-        }
-
         static void PrintSolution(List<List<int>> solution) 
         {
             for (int i = 0; i < solution.Count(); i++)

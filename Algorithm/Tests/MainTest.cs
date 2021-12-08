@@ -33,7 +33,7 @@ namespace Algorithm.Tests
                 output.WriteLine(string.Join(", ", line));
             }
 
-            var testResult = Algorithms.FF(input.Length, m, input);
+            var testResult = Algorithms.ExactAlg(input.Length, m, input);
             Assert.Equal(expectedResult, testResult);
 
         }
